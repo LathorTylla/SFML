@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <Window.h>
+#include "ShapeFactory.h"
+
 
 class BaseApp
 {
@@ -13,7 +15,7 @@ public:
   run();
 
   //Funcion de inicializacion
-  void
+  bool
   initialize();
 
   //Funcion que se actualiza por frames
@@ -31,5 +33,7 @@ private:
   Window * m_window;
   //sf::RenderWindow* window;
   sf::CircleShape* shape;
+  ShapeFactory m_shapeFactory;
+  sf::Shape* Triangulo;
 };
 

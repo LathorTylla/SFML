@@ -27,7 +27,7 @@ public:
 
   sf::RenderWindow*
   getWindow();
-
+ 
   void 
   init();
 
