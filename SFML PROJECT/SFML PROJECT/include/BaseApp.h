@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include <Window.h>
 #include "ShapeFactory.h"
+#include <Actor.h>
 
 
 class BaseApp
@@ -33,7 +34,8 @@ private:
   Window * m_window;
   //sf::RenderWindow* window;
   sf::CircleShape* shape;
-  ShapeFactory m_shapeFactory;
-  sf::Shape* Triangulo;
+  EngineUtilities::TSharedPointer<Actor>Triangle;
+  //ShapeFactory m_shapeFactory;
+  //sf::Shape* Triangulo;
 };
 

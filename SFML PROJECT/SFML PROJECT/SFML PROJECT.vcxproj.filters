@@ -36,6 +36,9 @@
     <ClCompile Include="src\ShapeFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Actor.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\BaseApp.h">
@@ -64,6 +67,12 @@
     </ClInclude>
     <ClInclude Include="include\Memory\TWeakPointer.h">
       <Filter>Header Files\Memory</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Entity.h">
+      <Filter>Header Files\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Actor.h">
+      <Filter>Header Files\ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

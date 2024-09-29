@@ -27,7 +27,6 @@
  * SOFTWARE.
 */
 #pragma once
-
 namespace EngineUtilities {
 	/**
 	 * @brief Clase TSharedPointer para manejar la gestión de memoria compartida.
@@ -46,14 +45,12 @@ namespace EngineUtilities {
 		 * Inicializa el puntero y el recuento de referencias a nullptr.
 		 */
 		TSharedPointer() : ptr(nullptr), refCount(nullptr) {}
-
 		/**
 		 * @brief Constructor que toma un puntero crudo.
 		 *
 		 * @param rawPtr Puntero crudo al objeto que se va a gestionar.
 		 */
 		explicit TSharedPointer(T* rawPtr) : ptr(rawPtr), refCount(new int(1)) {}
-
 		/**
 		 * @brief Constructor desde un puntero crudo y un recuento de referencias.
 		 *
@@ -67,7 +64,6 @@ namespace EngineUtilities {
 				++(*refCount);
 			}
 		}
-
 		/**
 		 * @brief Constructor de copia.
 		 *
@@ -83,7 +79,6 @@ namespace EngineUtilities {
 				++(*refCount);
 			}
 		}
-
 		/**
 		 * @brief Constructor de movimiento.
 		 *
@@ -97,7 +92,6 @@ namespace EngineUtilities {
 			other.ptr = nullptr;
 			other.refCount = nullptr;
 		}
-
 		/**
 		 * @brief Operador de asignación de copia.
 		 *
@@ -127,7 +121,6 @@ namespace EngineUtilities {
 			}
 			return *this;
 		}
-
 		/**
 		 * @brief Operador de asignación de movimiento.
 		 *
@@ -155,7 +148,6 @@ namespace EngineUtilities {
 			}
 			return *this;
 		}
-
 		/**
 		 * @brief Destructor.
 		 *
@@ -170,39 +162,37 @@ namespace EngineUtilities {
 				delete refCount;
 			}
 		}
-
 		/**
 		 * @brief Operador de desreferenciación.
 		 *
 		 * @return Referencia al objeto gestionado.
 		 */
 		T& operator*() const { return *ptr; }
-
 		/**
 		 * @brief Operador de acceso a miembros.
 		 *
 		 * @return Puntero al objeto gestionado.
 		 */
 		T* operator->() const { return ptr; }
-
+		// Agregar una función para comprobar si el puntero es válido
+		operator bool() const {
+			return ptr != nullptr;
+		}
 		/**
 		 * @brief Obtener el puntero crudo.
 		 *
 		 * @return Puntero crudo al objeto gestionado.
 		 */
 		T* get() const { return ptr; }
-
 		/**
 		 * @brief Comprobar si el puntero es nulo.
 		 *
 		 * @return true si el puntero es nulo, false en caso contrario.
 		 */
 		bool isNull() const { return ptr == nullptr; }
-
 	public:
 		T* ptr;       ///< Puntero al objeto gestionado.
 		int* refCount; ///< Puntero al recuento de referencias.
-
 		/**
 		 * @brief Método swap.
 		 *
@@ -214,14 +204,11 @@ namespace EngineUtilities {
 		{
 			T* tempPtr = other.ptr;
 			int* tempRefCount = other.refCount;
-
 			other.ptr = this->ptr;
 			other.refCount = this->refCount;
-
 			this->ptr = tempPtr;
 			this->refCount = tempRefCount;
 		}
-
 		/**
 				 * @brief Libera el objeto actual y opcionalmente asigna un nuevo objeto.
 				 *
@@ -235,7 +222,6 @@ namespace EngineUtilities {
 				delete ptr;
 				delete refCount;
 			}
-
 			// Si newPtr es nullptr, asignar nullptr al puntero y recuento de referencias
 			if (newPtr == nullptr)
 			{
@@ -249,8 +235,21 @@ namespace EngineUtilities {
 				refCount = new int(1);
 			}
 		}
+		// Método de conversión para hacer cast dinámico
+		template<typename U>
+		TSharedPointer<U> dynamic_pointer_cast() const {
+			// Intenta convertir el puntero de tipo T a U
+			U* castedPtr = dynamic_cast<U*>(ptr);
+			if (castedPtr) {
+				// Si la conversión es exitosa, devuelve un nuevo TSharedPointer<U>
+				return TSharedPointer<U>(castedPtr, refCount);
+			}
+			else {
+				// Si falla la conversión, devuelve un TSharedPointer<U> nulo
+				return TSharedPointer<U>();
+			}
+		}
 	};
-
 	/**
 	 * @brief Función de utilidad para crear un TSharedPointer.
 	 *

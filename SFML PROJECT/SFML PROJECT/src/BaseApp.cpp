@@ -1,4 +1,5 @@
 #include "BaseApp.h"
+#include "Actor.h"
 
 int
 BaseApp::run() {
@@ -17,7 +18,7 @@ BaseApp::run() {
 
 bool
 BaseApp::initialize() {
-	m_window = new Window(800, 600, "Galvan Engine");
+	m_window = new Window(800, 600, "LathorEngine");
 	shape = new sf::CircleShape(100.0f);
 	shape->setFillColor(sf::Color::Green);
 	if (!m_window) {
@@ -33,11 +34,19 @@ BaseApp::initialize() {
 
 	shape->setFillColor(sf::Color::Blue);
 	shape->setPosition(200.0f, 200.0f);
-	Triangulo = m_shapeFactory.createShape(ShapeType::TRIANGLE);
+
+	//Triangle actor
+	Triangle = EngineUtilities::MakeShared<Actor>("Triangle");
+	if (!Triangle.isNull()) {
+		Triangle->getComponent<ShapeFactory>()->createShape(ShapeType::TRIANGLE);
+	}
+	
+	
+	/*Triangulo = m_shapeFactory.createShape(ShapeType::TRIANGLE);
 	if (!Triangulo) {
 		ERROR("BaseApp", "initialize", "Error on triangulo creation, var is null");
 		return false;
-	}
+	}*/
 	return true;
 }
 
@@ -49,7 +58,10 @@ void
 BaseApp::render() {
 	m_window->clear();
 	m_window->draw(*shape);
-	m_window->draw(*Triangulo);
+	Triangle->render(*m_window);
+	/*if (!Triangle.isNull()) {
+		m_window->draw(*Triangle->getComponent<ShapeFactory>()->getShape());
+	}*/
 	m_window->display();
 }
 
@@ -58,5 +70,5 @@ BaseApp::cleanUp() {
 	m_window->destroy();
 	delete m_window;
 	delete shape;
-	delete Triangulo;
+	//delete Triangulo;
 }
