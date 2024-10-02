@@ -3,34 +3,39 @@ class Window;
 
 enum
 	ComponentType {
-	NONE = 0,
-	TRANSFORM = 1,
-	SPRITE = 2,
-	RENDERER = 3,
-	PHYSICS = 4,
-	AUDIOSOURCE = 5,
-	SHAPE = 6,
+	NONE = 0,				//Componente sin tipo
+	TRANSFORM = 1,  //Componente de transformacióm
+	SPRITE = 2,			//Componente de sprie
+	RENDERER = 3,		//Componente de render
+	PHYSICS = 4,		//Componente de fisicas
+	AUDIOSOURCE = 5,//Componente de audio
+	SHAPE = 6,			//Componente de forma
 };
 
 class
-	Component {
+Component {
 public:
 	
 	Component() = default;
+
+ /*
+	* @brief Constructor que inicializa un componente con un tipo específico.
+	* @param type Tipo del componente basado en la enumeración ComponentType.
+ */
 	
 	Component(const ComponentType type) : m_type(type) {}
 	
 	virtual
-		~Component() = default;
+	~Component() = default;
 	
 	virtual void
-		update(float deltaTime) = 0;
+	update(float deltaTime) = 0;
 
 	virtual void
-		render(Window window) = 0;
+	render(Window window) = 0;
 	
 	ComponentType
-		getType() const { return m_type; }
+	getType() const { return m_type; }
 
 protected:
 	ComponentType m_type; // Tipo de Componente.

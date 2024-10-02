@@ -72,8 +72,7 @@ namespace EngineUtilities {
 		 *
 		 * @param other Otro objeto TSharedPointer del mismo tipo T.
 		 */
-		TSharedPointer(const TSharedPointer<T>& other) : ptr(other.ptr), refCount(other.refCount)
-		{
+		TSharedPointer(const TSharedPointer<T>& other) : ptr(other.ptr), refCount(other.refCount){
 			if (refCount)
 			{
 				++(*refCount);
@@ -87,8 +86,7 @@ namespace EngineUtilities {
 		 *
 		 * @param other Otro objeto TSharedPointer del mismo tipo T.
 		 */
-		TSharedPointer(TSharedPointer<T>&& other) noexcept : ptr(other.ptr), refCount(other.refCount)
-		{
+		TSharedPointer(TSharedPointer<T>&& other) noexcept : ptr(other.ptr), refCount(other.refCount){
 			other.ptr = nullptr;
 			other.refCount = nullptr;
 		}
@@ -101,8 +99,7 @@ namespace EngineUtilities {
 		 * @param other Otro objeto TSharedPointer del mismo tipo T.
 		 * @return Referencia al objeto TSharedPointer actual.
 		 */
-		TSharedPointer<T>& operator=(const TSharedPointer<T>& other)
-		{
+		TSharedPointer<T>& operator=(const TSharedPointer<T>& other){
 			if (this != &other)
 			{
 				// Disminuir el recuento de referencias del objeto actual

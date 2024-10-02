@@ -5,41 +5,97 @@
 #include <Actor.h>
 #include "Prerequisites.h"
 
+  /*
+  * @brief Clase BaseApp que representa la aplicación base del programa.
+  *
+  * La clase BaseApp gestiona el ciclo de vida de la aplicación, incluyendo la inicialización,
+  * actualización, renderizado y limpieza de recursos. Además, gestiona el movimiento de actores
+  * dentro de la ventana.
+  */
 
-class BaseApp
-{
+class
+BaseApp{
 public:
   BaseApp() = default;
   ~BaseApp() = default;
 
-  //Funcion  encargada de ejecutar la funcion en main
+  /*
+   * @brief Realiza el movimiento del triángulo siguiendo los waypoints.
+   *
+   * Actualiza la posición del actor Triángulo basado en el deltaTime y los puntos de referencia (waypoints).
+   *
+   * @param deltaTime Tiempo transcurrido desde la última actualización.
+   * @param Triangle Puntero compartido al actor que representa el triángulo.
+  */
+
+  void
+  MovimientoTriangulo(float deltaTime, EngineUtilities::TSharedPointer<Actor> Triangle);
+
+
+  int
+  ActualPosition = 0; //Posicion actual de los waypoints
+
+  std::vector<sf::Vector2f>waypoints = {
+    {50.0f,50.0f},
+    {400.0f,50.0f},
+    {400.0f,200.0f},
+    {50.0f,200.0f},
+
+  };
+  
+  /*
+   * @brief Ejecuta la aplicación.
+   *
+   * Método que contiene el bucle principal de la aplicación.
+   * @return int Código de retorno de la aplicación.
+  */
+
   int 
   run();
 
-  //Funcion de inicializacion
+  /*
+   * @brief Inicializa la aplicación.
+   *
+   * Carga los recursos y configura los objetos necesarios para el inicio de la aplicación.
+   * @return bool Verdadero si la inicialización fue exitosa, falso en caso contrario.
+  */ 
+  
   bool
   initialize();
 
-  //Funcion que se actualiza por frames
+  /*
+   * @brief Actualiza el estado de la aplicación.
+   * 
+   * Se llama en cada cuadro para actualizar el estado de los objetos dentro de la aplicación.
+  */  
   void
   update();
 
-  //Funcion de renderizado
+  /*
+   * @brief Renderiza los objetos en la ventana.
+   * 
+   * Se llama en cada cuadro para dibujar los objetos en la ventana.
+  */ 
   void
   render();
 
+  /*
+   * @brief Limpia los recursos de la aplicación.
+   *
+   * Libera la memoria y otros recursos utilizados por la aplicación.
+  */
   void
   cleanUp();
 
 private:
-  sf::Clock clock;
-  sf::Time deltaTime;
+  sf::Clock clock;    //Reloj para medir el tiempo trasncurrido
+  sf::Time deltaTime; //Tiempo transcurrido desd el ultimo cuadro
 
   Window * m_window;
   //sf::RenderWindow* window;
   //sf::CircleShape* shape;
-  EngineUtilities::TSharedPointer<Actor>Triangle;
-  EngineUtilities::TSharedPointer<Actor> Circle;
+  EngineUtilities::TSharedPointer<Actor>Triangle; //Puntero compartidod al actor Triangle
+  EngineUtilities::TSharedPointer<Actor> Circle;  //Puntero compartidod al actor Circle
   //ShapeFactory m_shapeFactory;
   //sf::Shape* Triangulo;
 };
